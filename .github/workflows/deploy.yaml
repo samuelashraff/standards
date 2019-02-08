@@ -1,0 +1,54 @@
+name: Deploy standards to GitHub pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit
+        run: pre-commit run --all-files || exit 1
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Bootstrap HTML files for standards
+        run: poetry run invoke bootstrap-html
+
+      - name: Prepare dist dir
+        run: mkdir dist && cp -r draft dist
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        run: |
+          SRC="$(pwd)"
+          mkdir /tmp/github-pages && cd /tmp/github-pages
+          git init . && git checkout --orphan "${BRANCH}"
+          cp -r "${SRC}/${DEPLOY_DIR}"/* .
+          [[ ! -z "${FQDN}" ]] && echo "${FQDN}" > CNAME
+
+          git config user.name "GitHub" && git config user.email "<noreply@github.com>"
+          git add . && git status && git commit --message "${MESSAGE}"
+          git push -f -q "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "${BRANCH}"
+        env:
+          DEPLOY_DIR: dist
+          FQDN: standards.lifeengine.io
+          MESSAGE: Deploy to GitHub Pages
+          BRANCH: gh-pages
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
