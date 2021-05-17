@@ -8,14 +8,26 @@
   "paths": {
     "/Shipment/ForwardersCargoReceipt": {
       "post": {
-        "summary": "Cargo Receipt",
-        "operationId": "requestForwardersCargoReceiptData",
+        "summary": "Shipment/ForwardersCargoReceipt",
+        "description": "Cargo Receipt",
+        "operationId": "request_Shipment_ForwardersCargoReceipt",
         "parameters": [
+          {
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
           {
             "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
             "required": false,
             "schema": {
-              "title": "Request signature",
+              "title": "X-Signature",
               "type": "string",
               "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
             },
@@ -23,12 +35,12 @@
             "in": "header"
           },
           {
-            "description": "The login token.",
+            "description": "The login token. Value should be \"Bearer [token]\"",
             "required": false,
             "schema": {
               "title": "Authorization",
               "type": "string",
-              "description": "The login token."
+              "description": "The login token. Value should be \"Bearer [token]\""
             },
             "name": "authorization",
             "in": "header"
@@ -37,7 +49,7 @@
             "description": "The bare domain of the system that provided the token.",
             "required": false,
             "schema": {
-              "title": "Authorization provider",
+              "title": "X-Authorization-Provider",
               "type": "string",
               "description": "The bare domain of the system that provided the token."
             },
@@ -61,7 +73,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ForwardersCargoReceipt"
+                  "$ref": "#/components/schemas/ForwardersCargoReceiptResponse"
                 }
               }
             }
@@ -82,8 +94,19 @@
   },
   "components": {
     "schemas": {
-      "ForwardersCargoReceipt": {
-        "title": "ForwardersCargoReceipt",
+      "ForwardersCargoReceiptRequest": {
+        "title": "ForwardersCargoReceiptRequest",
+        "required": ["shipmentId"],
+        "type": "object",
+        "properties": {
+          "shipmentId": {
+            "title": "Shipment ID",
+            "type": "string"
+          }
+        }
+      },
+      "ForwardersCargoReceiptResponse": {
+        "title": "ForwardersCargoReceiptResponse",
         "required": [
           "carrierName",
           "exporterName",
@@ -183,17 +206,6 @@
           "totalVolume": {
             "title": "Total volume",
             "type": "number"
-          }
-        }
-      },
-      "ForwardersCargoReceiptRequest": {
-        "title": "ForwardersCargoReceiptRequest",
-        "required": ["shipmentId"],
-        "type": "object",
-        "properties": {
-          "shipmentId": {
-            "title": "Shipment ID",
-            "type": "string"
           }
         }
       },

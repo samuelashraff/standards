@@ -7,15 +7,42 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
   - repo: https://github.com/ryanrhee/shellcheck-py
-    rev: v0.7.1.1
+    rev: v0.7.2.1
     hooks:
       - id: shellcheck
+  - repo: local
+    hooks:
+      # Generate OpenAPI specs for standards - BEFORE PRETTIER FORMATS THEM
+      - id: convert-standards
+        name: Convert standards
+        entry: poetry run invoke convert-standards
+        language: system
+        # TODO: convert only the file that was changed
+        pass_filenames: false
+        files: |
+          (?x)^(
+            draft/.*json|
+            src/.*py
+          )$
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.2.1
+    rev: v2.3.0
     hooks:
       - id: prettier
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.8.0
+    hooks:
+      - id: isort
+  - repo: https://github.com/psf/black
+    rev: 21.5b1
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
   - repo: https://github.com/digitalliving/openapi-to-fastapi
-    rev: 0.1.4
+    rev: 0.1.5
     hooks:
       - id: openapi-validator
         files: ".*?draft/DataProducts/.*?json$"

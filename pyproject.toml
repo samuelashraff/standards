@@ -5,7 +5,11 @@ description = "Digital Living Standards"
 authors = ["Digital Living International Ltd"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
+pydantic = "^1.8.2"
+fastapi = "^0.65.1"
+stringcase = "^1.2.0"
+deepdiff = "^5.5.0"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"

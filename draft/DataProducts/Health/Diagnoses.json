@@ -1,16 +1,16 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Basic Company Info",
-    "description": "Data Product for basic company info",
+    "title": "Persons Diagnoses",
+    "description": "Data Product for user's diagnoses with ICD10 codes",
     "version": "1.0.0"
   },
   "paths": {
-    "/Company/BasicInfo": {
+    "/Health/Diagnoses": {
       "post": {
-        "summary": "Company/BasicInfo",
-        "description": "Information about the company",
-        "operationId": "request_Company_BasicInfo",
+        "summary": "Health/Diagnoses",
+        "description": "Health diagnoses in ICD codes",
+        "operationId": "request_Health_Diagnoses",
         "parameters": [
           {
             "description": "Optional consent token",
@@ -61,7 +61,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BasicCompanyInfoRequest"
+                "$ref": "#/components/schemas/HealthDiagnosesRequest"
               }
             }
           },
@@ -73,7 +73,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BasicCompanyInfoResponse"
+                  "$ref": "#/components/schemas/HealthDiagnosesResponse"
                 }
               }
             }
@@ -94,46 +94,6 @@
   },
   "components": {
     "schemas": {
-      "BasicCompanyInfoRequest": {
-        "title": "BasicCompanyInfoRequest",
-        "required": ["companyId"],
-        "type": "object",
-        "properties": {
-          "companyId": {
-            "title": "Company Id",
-            "type": "string",
-            "description": "The ID of the company",
-            "example": "2464491-9"
-          }
-        }
-      },
-      "BasicCompanyInfoResponse": {
-        "title": "BasicCompanyInfoResponse",
-        "required": ["name", "companyId", "companyForm", "registrationDate"],
-        "type": "object",
-        "properties": {
-          "name": {
-            "title": "Name of the company",
-            "type": "string",
-            "example": "Digital Living International Oy"
-          },
-          "companyId": {
-            "title": "ID of the company",
-            "type": "string",
-            "example": "2464491-9"
-          },
-          "companyForm": {
-            "title": "The company form of the company",
-            "type": "string",
-            "example": "LLC"
-          },
-          "registrationDate": {
-            "title": "Date of registration for the company",
-            "type": "string",
-            "example": "2012-02-23"
-          }
-        }
-      },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
         "type": "object",
@@ -144,6 +104,27 @@
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             }
+          }
+        }
+      },
+      "HealthDiagnosesRequest": {
+        "title": "HealthDiagnosesRequest",
+        "type": "object",
+        "properties": {}
+      },
+      "HealthDiagnosesResponse": {
+        "title": "HealthDiagnosesResponse",
+        "required": ["diagnoses"],
+        "type": "object",
+        "properties": {
+          "diagnoses": {
+            "title": "Diagnoses",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Users diagnoses in ICD10 code",
+            "example": ["icd10:J45"]
           }
         }
       },

@@ -8,16 +8,39 @@
   "paths": {
     "/Company/Recommendation": {
       "post": {
-        "summary": "Company/Recommendation Data Product",
-        "operationId": "route_Company_Recommendation_post",
+        "summary": "Company/Recommendation",
+        "description": "Data Product for company recommendations score",
+        "operationId": "request_Company_Recommendation",
         "parameters": [
           {
-            "description": "The login token.",
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
+          {
+            "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
+            "required": false,
+            "schema": {
+              "title": "X-Signature",
+              "type": "string",
+              "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
+            },
+            "name": "x-signature",
+            "in": "header"
+          },
+          {
+            "description": "The login token. Value should be \"Bearer [token]\"",
             "required": false,
             "schema": {
               "title": "Authorization",
               "type": "string",
-              "description": "The login token."
+              "description": "The login token. Value should be \"Bearer [token]\""
             },
             "name": "authorization",
             "in": "header"

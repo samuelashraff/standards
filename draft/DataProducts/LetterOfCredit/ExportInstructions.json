@@ -8,14 +8,26 @@
   "paths": {
     "/LetterOfCredit/ExportInstructions": {
       "post": {
-        "summary": "Export Instructions",
-        "operationId": "requestExportInstructionsData",
+        "summary": "LetterOfCredit/ExportInstructions",
+        "description": "Export Instructions",
+        "operationId": "request_LetterOfCredit_ExportInstructions",
         "parameters": [
+          {
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
           {
             "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
             "required": false,
             "schema": {
-              "title": "Request signature",
+              "title": "X-Signature",
               "type": "string",
               "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
             },
@@ -23,12 +35,12 @@
             "in": "header"
           },
           {
-            "description": "The login token.",
+            "description": "The login token. Value should be \"Bearer [token]\"",
             "required": false,
             "schema": {
               "title": "Authorization",
               "type": "string",
-              "description": "The login token."
+              "description": "The login token. Value should be \"Bearer [token]\""
             },
             "name": "authorization",
             "in": "header"
@@ -37,7 +49,7 @@
             "description": "The bare domain of the system that provided the token.",
             "required": false,
             "schema": {
-              "title": "Authorization provider",
+              "title": "X-Authorization-Provider",
               "type": "string",
               "description": "The bare domain of the system that provided the token."
             },
@@ -61,7 +73,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExportInstructions"
+                  "$ref": "#/components/schemas/ExportInstructionsResponse"
                 }
               }
             }
@@ -82,8 +94,20 @@
   },
   "components": {
     "schemas": {
-      "ExportInstructions": {
-        "title": "ExportInstructions",
+      "ExportInstructionsRequest": {
+        "title": "ExportInstructionsRequest",
+        "required": ["letterOfCreditNumber"],
+        "type": "object",
+        "properties": {
+          "letterOfCreditNumber": {
+            "title": "Letter of credit number",
+            "type": "string",
+            "example": "123"
+          }
+        }
+      },
+      "ExportInstructionsResponse": {
+        "title": "ExportInstructionsResponse",
         "required": [
           "advisingBankBic",
           "advisingBankName",
@@ -190,18 +214,6 @@
           "letterOfCreditValue": {
             "title": "Letter of credit value",
             "type": "integer"
-          }
-        }
-      },
-      "ExportInstructionsRequest": {
-        "title": "ExportInstructionsRequest",
-        "required": ["letterOfCreditNumber"],
-        "type": "object",
-        "properties": {
-          "letterOfCreditNumber": {
-            "title": "Letter of credit number",
-            "type": "string",
-            "example": "123"
           }
         }
       },

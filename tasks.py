@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from invoke import task
 import jinja2
+from invoke import task
 
 STANDARDS_DIR = [Path("draft") / "DataProducts"]
 
@@ -19,3 +19,13 @@ def bootstrap_html(ctx):
             html_file = p.with_suffix(".html")
             html_file.write_text(html_content)
             print(f"{html_file} written")
+
+
+@task()
+def convert_standards(ctx):
+    """
+    Convert data product standards from python sources to OpenAPI specs
+    """
+    from src.converter import convert_data_product_standards
+
+    convert_data_product_standards()

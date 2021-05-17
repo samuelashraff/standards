@@ -8,36 +8,53 @@
   "paths": {
     "/AirQuality/Current": {
       "post": {
-        "summary": "AirQuality/Current Data Product",
+        "summary": "AirQuality/Current",
         "description": "Current air quality",
-        "operationId": "requestAirQualityIndexData",
+        "operationId": "request_AirQuality_Current",
         "parameters": [
+          {
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
           {
             "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
             "required": false,
             "schema": {
-              "title": "Request signature",
+              "title": "X-Signature",
               "type": "string",
               "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
             },
-            "name": "X-Signature",
+            "name": "x-signature",
             "in": "header"
           },
           {
+            "description": "The login token. Value should be \"Bearer [token]\"",
+            "required": false,
             "schema": {
-              "type": "string"
+              "title": "Authorization",
+              "type": "string",
+              "description": "The login token. Value should be \"Bearer [token]\""
             },
-            "in": "header",
-            "name": "Authorization",
-            "description": "The login token."
+            "name": "authorization",
+            "in": "header"
           },
           {
+            "description": "The bare domain of the system that provided the token.",
+            "required": false,
             "schema": {
-              "type": "string"
+              "title": "X-Authorization-Provider",
+              "type": "string",
+              "description": "The bare domain of the system that provided the token."
             },
-            "in": "header",
-            "name": "X-Authorization-Provider",
-            "description": "The bare domain of the system that provided the token."
+            "name": "x-authorization-provider",
+            "in": "header"
           }
         ],
         "requestBody": {
@@ -84,16 +101,16 @@
         "properties": {
           "lat": {
             "title": "Latitude",
-            "maximum": 90,
-            "minimum": -90,
+            "maximum": 90.0,
+            "minimum": -90.0,
             "type": "number",
             "description": "The latitude coordinate of the desired location",
             "example": 60.192059
           },
           "lon": {
             "title": "Longitude",
-            "maximum": 180,
-            "minimum": -180,
+            "maximum": 180.0,
+            "minimum": -180.0,
             "type": "number",
             "description": "The longitude coordinate of the desired location",
             "example": 24.945831
@@ -107,9 +124,9 @@
         "properties": {
           "airQualityIndex": {
             "title": "Air Quality Index",
-            "minimum": 0,
+            "minimum": 0.0,
             "type": "integer",
-            "description": "Current air quality index.\n        Ranges:\n        0-50 Good;\n        51-100 Moderate;\n        101-150 Unhealthy For Sensitive Groups;\n        151-200 Unhealthy;\n        201-300 Very Unhealthy;\n        301+ Hazardous",
+            "description": "Current air quality index.\nRanges:\n0-50 Good;\n51-100 Moderate;\n101-150 Unhealthy For Sensitive Groups;\n151-200 Unhealthy;\n201-300 Very Unhealthy;\n301+ Hazardous",
             "example": 30
           },
           "timestamp": {
@@ -121,7 +138,9 @@
           "attribution": {
             "title": "Source Attribution",
             "type": "array",
-            "items": {},
+            "items": {
+              "type": "string"
+            },
             "description": "List of text to show required credits to data sources",
             "example": [
               "Moscow State environmental monitoring (Государственный экологический мониторинг в Москве)",

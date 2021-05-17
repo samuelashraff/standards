@@ -8,9 +8,55 @@
   "paths": {
     "/Company/Shareholders": {
       "post": {
-        "summary": "Company/Shareholders Data Product",
+        "summary": "Company/Shareholders",
         "description": "Information about the shareholders of the company",
-        "operationId": "requestCompanyShareHoldersData",
+        "operationId": "request_Company_Shareholders",
+        "parameters": [
+          {
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
+          {
+            "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
+            "required": false,
+            "schema": {
+              "title": "X-Signature",
+              "type": "string",
+              "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
+            },
+            "name": "x-signature",
+            "in": "header"
+          },
+          {
+            "description": "The login token. Value should be \"Bearer [token]\"",
+            "required": false,
+            "schema": {
+              "title": "Authorization",
+              "type": "string",
+              "description": "The login token. Value should be \"Bearer [token]\""
+            },
+            "name": "authorization",
+            "in": "header"
+          },
+          {
+            "description": "The bare domain of the system that provided the token.",
+            "required": false,
+            "schema": {
+              "title": "X-Authorization-Provider",
+              "type": "string",
+              "description": "The bare domain of the system that provided the token."
+            },
+            "name": "x-authorization-provider",
+            "in": "header"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -32,9 +78,6 @@
               }
             }
           },
-          "404": {
-            "description": "Item not found"
-          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -45,25 +88,7 @@
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Authorization",
-            "description": "The login token."
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "X-Authorization-Provider",
-            "description": "The bare domain of the system that provided the token."
-          }
-        ]
+        }
       }
     }
   },

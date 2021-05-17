@@ -8,36 +8,53 @@
   "paths": {
     "/Weather/Current/Metric": {
       "post": {
-        "summary": "Weather/Current/Metric Data Product",
+        "summary": "Weather/Current/Metric",
         "description": "Current weather in metric units",
-        "operationId": "requestCurrentWeatherMetricData",
+        "operationId": "request_Weather_Current_Metric",
         "parameters": [
+          {
+            "description": "Optional consent token",
+            "required": false,
+            "schema": {
+              "title": "X-Consent-Token",
+              "type": "string",
+              "description": "Optional consent token"
+            },
+            "name": "x-consent-token",
+            "in": "header"
+          },
           {
             "description": "HMAC-RSA256 signature for the request using Product Gateway's public key",
             "required": false,
             "schema": {
-              "title": "Request signature",
+              "title": "X-Signature",
               "type": "string",
               "description": "HMAC-RSA256 signature for the request using Product Gateway's public key"
             },
-            "name": "X-Signature",
+            "name": "x-signature",
             "in": "header"
           },
           {
+            "description": "The login token. Value should be \"Bearer [token]\"",
+            "required": false,
             "schema": {
-              "type": "string"
+              "title": "Authorization",
+              "type": "string",
+              "description": "The login token. Value should be \"Bearer [token]\""
             },
-            "in": "header",
-            "name": "Authorization",
-            "description": "The login token."
+            "name": "authorization",
+            "in": "header"
           },
           {
+            "description": "The bare domain of the system that provided the token.",
+            "required": false,
             "schema": {
-              "type": "string"
+              "title": "X-Authorization-Provider",
+              "type": "string",
+              "description": "The bare domain of the system that provided the token."
             },
-            "in": "header",
-            "name": "X-Authorization-Provider",
-            "description": "The bare domain of the system that provided the token."
+            "name": "x-authorization-provider",
+            "in": "header"
           }
         ],
         "requestBody": {
@@ -84,16 +101,16 @@
         "properties": {
           "lat": {
             "title": "Latitude",
-            "maximum": 90,
-            "minimum": -90,
+            "maximum": 90.0,
+            "minimum": -90.0,
             "type": "number",
             "description": "The latitude coordinate of the desired location",
             "example": 60.192059
           },
           "lon": {
             "title": "Longitude",
-            "maximum": 180,
-            "minimum": -180,
+            "maximum": 180.0,
+            "minimum": -180.0,
             "type": "number",
             "description": "The longitude coordinate of the desired location",
             "example": 24.945831
@@ -135,16 +152,16 @@
           },
           "windSpeed": {
             "title": "Current wind speed in m/s",
-            "minimum": 0,
+            "minimum": 0.0,
             "type": "number",
             "example": 2.1
           },
           "windDirection": {
             "title": "Current wind direction in meteorological wind direction degrees",
-            "maximum": 360,
-            "minimum": 0,
+            "maximum": 360.0,
+            "minimum": 0.0,
             "type": "number",
-            "example": 220
+            "example": 220.0
           }
         }
       },

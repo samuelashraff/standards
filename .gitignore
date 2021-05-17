@@ -19,3 +19,7 @@ Thumbs.db:encryptable
 .DS_Store
 .AppleDouble
 .LSOverride
+
+__pycache__
+.python-version
+.venv
