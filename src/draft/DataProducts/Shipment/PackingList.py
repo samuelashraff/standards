@@ -21,7 +21,9 @@ class PackingListResponse(CamelCasedModel):
     packing_description: str = Field(..., title="Packing description")
     packing_reference: str = Field(..., title="Packing reference")
     place_of_receipt: str = Field(..., title="Place of receipt")
-    product_items: List[ProductItem] = Field(..., title="Product items")
+    product_items: List[ProductItem] = Field(
+        ..., title="Product items", description="List of product items"
+    )
     total_gross_weight: float = Field(..., title="Total gross weight")
     total_net_weight: float = Field(..., title="Total net weight")
     total_volume: float = Field(..., title="Total volume")

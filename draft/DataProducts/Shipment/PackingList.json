@@ -183,7 +183,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductItem"
-            }
+            },
+            "description": "List of product items"
           },
           "totalGrossWeight": {
             "title": "Total gross weight",

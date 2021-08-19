@@ -155,7 +155,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Recommendation"
-            }
+            },
+            "description": "List of recommendations"
           }
         }
       },

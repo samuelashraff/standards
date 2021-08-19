@@ -57,14 +57,16 @@ class ShareholdersInfoRequest(BaseModel):
 
 
 class ShareholdersInfoResponse(BaseModel):
-    shareSeries: List[ShareSeries] = Field(title="Share series")
-    owners: List[Owners]
+    shareSeries: List[ShareSeries] = Field(
+        ..., title="Share series", description="List of share series"
+    )
+    owners: List[Owners] = Field(..., title="Owners", description="List of owners")
 
 
 STANDARD = DataProductStandard(
-    description="Data Product for Basic Shareholders info",
+    description="Data Product for Shareholders info",
     request=ShareholdersInfoRequest,
     response=ShareholdersInfoResponse,
     route_description="Information about the shareholders of the company",
-    summary="Basic Shareholders Info",
+    summary="Shareholders Info",
 )

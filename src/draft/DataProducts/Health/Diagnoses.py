@@ -11,7 +11,7 @@ class HealthDiagnosesRequest(BaseModel):
 
 class HealthDiagnosesResponse(BaseModel):
     diagnoses: List[str] = Field(
-        ..., description="Users diagnoses in ICD10 code", example=["icd10:J45"]
+        ..., description="List of users diagnoses in ICD10 code", example=["icd10:J45"]
     )
 
 

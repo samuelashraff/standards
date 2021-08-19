@@ -123,7 +123,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Users diagnoses in ICD10 code",
+            "description": "List of users diagnoses in ICD10 code",
             "example": ["icd10:J45"]
           }
         }

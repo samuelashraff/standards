@@ -30,7 +30,9 @@ class Recommendation(BaseModel):
 
 
 class RecommendationResponse(BaseModel):
-    results: List[Recommendation] = Field(..., title="Recommendation results")
+    results: List[Recommendation] = Field(
+        ..., title="Recommendation results", description="List of recommendations"
+    )
 
 
 STANDARD = DataProductStandard(

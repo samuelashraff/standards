@@ -108,7 +108,7 @@ def convert_data_product_standards():
             raise ValueError(f"Error finding STANDARD variable in {p}")
 
         # Get standard name based on file path
-        standard.name = str(p.relative_to(in_dir).with_suffix(""))
+        standard.name = p.relative_to(in_dir).with_suffix("").as_posix()
         if not standard.route_summary:
             standard.route_summary = standard.name
 
@@ -118,13 +118,14 @@ def convert_data_product_standards():
 
         current_spec = {}
         if out_file.exists():
-            current_spec = json.loads(out_file.read_text())
+            current_spec = json.loads(out_file.read_text(encoding="utf-8"))
 
         # Write resulted JSON only if it's changed to satisfy pre-commit hook
         if DeepDiff(current_spec, openapi, ignore_order=True) != {}:
             print(f"Exporting {out_file}")
             out_file.write_text(
-                json.dumps(openapi, indent=2, ensure_ascii=False) + "\n"
+                json.dumps(openapi, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
             )
         else:
             print(f"Skipping {out_file}")
