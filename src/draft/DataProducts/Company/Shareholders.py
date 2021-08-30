@@ -11,7 +11,7 @@ class ShareSeries(BaseModel):
     )
     votesPerShare: int = Field(
         ...,
-        title="Votes Per Share",
+        title="Votes per share",
         description="Number of votes per share in the share series",
         example=1,
     )
