@@ -6,7 +6,7 @@ from src.converter import DataProductStandard
 class BasicCompanyInfoRequest(BaseModel):
     companyId: str = Field(
         ...,
-        title="Company Id",
+        title="Company ID",
         description="The ID of the company",
         example="2464491-9",
     )

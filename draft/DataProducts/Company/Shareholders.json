@@ -178,7 +178,7 @@
         "type": "object",
         "properties": {
           "companyId": {
-            "title": "Company Id",
+            "title": "Company ID",
             "type": "string",
             "description": "The ID of the company, only supports Finnish business ID's",
             "example": "2464491-9"

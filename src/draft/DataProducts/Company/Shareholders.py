@@ -50,7 +50,7 @@ class Owners(BaseModel):
 class ShareholdersInfoRequest(BaseModel):
     companyId: str = Field(
         ...,
-        title="Company Id",
+        title="Company ID",
         description="The ID of the company, only supports Finnish business ID's",
         example="2464491-9",
     )
